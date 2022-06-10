@@ -9,27 +9,15 @@ defmodule MyRedisAgent do
     end
   
     def get(pid, key) do
-        Agent.get(pid, &do_get(&1, key))
+        Agent.get(pid, fn mem -> mem |> Map.fetch(key) end)
     end
   
     def set(pid, key, value) do
-        Agent.update(pid, &do_set(&1, key, value))
+        Agent.update(pid, fn mem -> mem |> Map.put(key, value) end)
     end
   
     def delete(pid, key) do
-        Agent.update(pid, &do_delete(&1, key))
-    end
-
-    defp do_get(mem, key) do
-        mem |> Map.fetch(key)
-    end
-
-    defp do_set(mem, key, value) do
-        mem |> Map.put(key, value)
-    end
-
-    defp do_delete(mem, key) do
-        mem |> Map.delete(key)
+        Agent.update(pid, fn mem -> mem |> Map.delete(key) end)
     end
 
   end
