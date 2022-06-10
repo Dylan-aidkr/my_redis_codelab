@@ -3,7 +3,7 @@ defmodule MyRedisTest do
 
   setup do
     {:ok, redis} = MyRedis.start_link()
-    %{redis: redis}
+    %{redis: redis }
   end
 
   test "single", %{redis: redis} do
@@ -50,5 +50,6 @@ defmodule MyRedisTest do
     assert :error == MyRedis.get(redis, :k1)
     assert :error == MyRedis.get(redis, :k2)
     assert :error == MyRedis.get(redis, :k3)
+    
   end
 end
